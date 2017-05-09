@@ -28,15 +28,33 @@ contentOverlay.style.zIndex = '10'
 document.body.prepend(contentOverlay)
 
 ///========> document.body.removeChild(contentOverlay)
+document.onload
+if (getPercentageScrolled(document.body.offsetHeight, (window.innerHeight + window.pageYOffset) >= 90){
+  document.body.prepend(contentOverlay)
+}
+function overLayAbsent(){
+  return document.body.getElementsByClassName('.overlay').length === 0
+}
+//This properly parses the percentage
 
 function getPercentageScrolled(docHeight, yOffset){ ///yOffset is in the form of `window.innerHeight + window.pageYOffset`
-  return (yOffset / docHeight) * 100
+  return Math.round((yOffset / docHeight) * 100)
 }
-getPercentageScrolled(document.body.offsetHeight, (window.innerHeight + window.pageYOffset))
- //This properly parses the percentage
- Math.round(getPercentageScrolled(document.body.offsetHeight, (window.innerHeight + window.pageYOffset)))
 
 
-
-
- 
+ document.addEventListener('scroll', function(e){
+    let docHeight = document.body.offsetHeight
+    let bottomOffset = window.innerHeight + window.pageYOffset
+     if(overLayAbsent() && getPercentageScrolled(docHeight, bottomOffset) >= 90){
+         let contentOverlay = document.createElement('div')
+         contentOverlay.style.height = `${window.innerHeight}px`
+         contentOverlay.style.width = '100%'           /////////over-lay div\\\\\\\\
+         contentOverlay.style.backgroundColor = "rgba(15,15,15, 0.2)"
+         contentOverlay.style.position = "fixed"
+         contentOverlay.style.top = '0'
+         contentOverlay.style.left = '0'
+         contentOverlay.style.zIndex = '10'
+         contentOverlay.className = 'overlay'
+         document.body.prepend(contentOverlay)
+     }
+ })
